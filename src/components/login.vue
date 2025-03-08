@@ -1,4 +1,5 @@
 <template>
+  <div class="container-login">
   <div class="login">
     <h1>Login</h1>
     <form @submit.prevent="handleLogin">
@@ -14,6 +15,7 @@
       <p v-if="error" style="color: red;">{{ error }}</p>
     </form>
   </div>
+</div>
 </template>
 
 <script>
@@ -54,5 +56,45 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos do componente */
+        .container-login {
+            background: white;
+            color: #000;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .login{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkblue;
+        }
+
+      
+        
+
 </style>
