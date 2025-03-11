@@ -1,16 +1,17 @@
 
 
 <template>
-  <div class="container">
-   <AppHeader />
-   <div class="container-body">
-    <navbar />
-    
+  <div class="menu">
+    <AppHeader />
   </div>
+  <div class="parte-principal">
+    <navbar />
+   
+  </div>
+  <div class="footer">
     <appFooter />
   </div>
-   
- 
+
 </template>
 
 
@@ -18,13 +19,16 @@
 import navbar from '../components/navbar.vue';
 import appFooter from '../components/appFooter.vue'
 import AppHeader from '../components/appHeader.vue';
+import ListClients from '../components/Listclients.vue'
+
 
 
 export default {
   components: {
     navbar,
     appFooter,
-    AppHeader
+    AppHeader,
+    ListClients
   }
 };
 
@@ -34,16 +38,21 @@ export default {
 
 <style scoped>
 
-.container{
+.menu{
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  color: #000;
+}
+.parte-principal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
 }
 
-.container-body{
-    display: flex;
-    flex-direction: row  ;
+.footer{
+  display: flex;
 }
-
 
 
 </style>

@@ -1,14 +1,15 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Clientes</a></li> 
+      <router-link to="/home">Início</router-link> 
+      <router-link to="/clientes">Clientes</router-link> 
+      <router-link to="/addClients">Adicionar Cliente</router-link> 
     </ul>
   </nav>
   </template>
   
-  <script>
-
+  <script> 
+      
   </script>
   
   <style scoped>
