@@ -2,12 +2,13 @@
   <div class="container-list">
     <h1>Lista de Clientes</h1>
      <div class="finder">
+      <router-link to="/addClients"><button type="text" class="view pi pi-plus"> Cadastrar</button></router-link>
         <input type="text"
         v-model="clientStore.searchQuery" 
         placeholder="Buscar por CPF" 
         
         />
-        <router-link to="/addClients"><button type="text" class="view pi pi-plus"> Cadastrar</button></router-link>
+        
      </div> 
 
     <p v-if="clientStore.loading">Carregando...</p>
@@ -41,13 +42,13 @@
       <tbody>
         <tr  v-for="client in clientStore.filteredClients" :key="client.clienteId">
           <td>{{ client.clienteId }}</td>
-          <td>{{ client.cpf }}</td>
+          <td>{{formatCpf (client.cpf) }}</td>
           <td>{{ client.nome }}</td>
-          <td>{{ client.rg }}</td>
-          <td>{{ client.dataExpedicao }}</td>
+          <td class="rg">{{formatRg(client.rg) }}</td>
+          <td class="dataOrgãodeExpedição">{{ new Date(client.dataExpedicao).toLocaleDateString('pt-BR') }}</td>
           <td>{{ client.orgaoExpedicao }}</td>
           <td>{{ client.uf }}</td>
-          <td>{{ client.dataNascimento }}</td>
+          <td>{{ new Date(client.dataNascimento).toLocaleDateString('pt-BR') }}</td>
           <td>{{ client.sexo }}</td>
           <td>{{ client.estadoCivil }}</td>
           <td>{{ client.endereco.enderecoId }}</td>
@@ -60,7 +61,7 @@
           <td>{{ client.endereco.uf }}</td>
           <td class="actions">
             <router-link :to="{ name: 'edit-client', params: { clienteId: client.clienteId } }">
-              <button class="view "><i class="pi pi-eye"></i> Ver</button>
+              <button class="view "><i class="pi pi-pencil"></i> Alterar</button>
             </router-link>
           
             <button v-on:click="deleteClient(client.clienteId)" class="delete"> <i class="pi pi pi-trash"></i>Deletar</button>
@@ -91,6 +92,14 @@
         clientStore.fetchClients()
      })
 
+     const formatCpf = (cpf) => {
+      if (!cpf) return '';
+      return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    };
+    const formatRg = (rg) => {
+  if (!rg) return '';
+  return rg.replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, '$1.$2.$3-$4');
+   };
 
     const deleteClient = (clientID) => {
       Swal.fire({
@@ -124,12 +133,14 @@
 .container-list{
   display: flex;
   flex-direction: column;
+  align-items: start;
   justify-content: flex-start;
-  align-self: start;
+  /* align-self: start; */
 }
 h1{
   margin-bottom: 10px;
 }
+
 .finder{
     display: flex;
     margin-bottom: 20px;
@@ -142,19 +153,19 @@ h1{
     padding: 10px;
 }
 .finder button{
-    margin-left: 20px;
+    margin-right: 20px;
     max-width: 100px;
 }
 .container {
-  width: 50vw;
+  width: 30vw;
   margin: 0 auto;
   padding: 20px;
 }
 
 .styled-table {
-  width: 50vw;
+  width: 20vw;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 14px;
   text-align: left;
   background-color: #fff;
   border: 1px solid #ddd; /* Borda externa */
@@ -168,10 +179,13 @@ h1{
 
 .styled-table th,
 .styled-table td {
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #ddd; /* Bordas internas para células */
+  white-space: nowrap;
 }
-
+.styled-table td:nth-child(6) {
+  width: 50px; 
+}
 .styled-table tbody tr:hover {
   background-color: #f1f1f1;
 }

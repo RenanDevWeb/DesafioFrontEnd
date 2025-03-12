@@ -117,9 +117,12 @@ import { ref } from "vue";
 import { useClientStore } from "../assets/stores/clientStore.js";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { useRoute,useRouter  } from 'vue-router';
 
 export default {
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const form = ref({
       clienteId: 2777,
       cpf: "",
@@ -172,9 +175,10 @@ export default {
         sanitizeData();
         
         console.log("Dados do formulário:", form.value);
-        clientStore.fillFormclient(form.value); // Atualiza os dados na store
-        await clientStore.submitFormClient();  // Envia os dados da store
+        clientStore.fillFormclient(form.value); 
+        await clientStore.submitFormClient();  
         Swal.fire('Cliente cadastrado com Sucesso');
+        router.push('/clientes');
       } catch (error) {
         Swal.fire('Houve um erro ao enviar o formulário.');
        

@@ -113,13 +113,16 @@
 
 <script>
 import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter  } from 'vue-router';
 import { useClientStore } from '../assets/stores/clientStore';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
   name: 'AlterarCliente',
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const clientStore = useClientStore();
     const clientData = ref({
       clienteId: 0,
@@ -203,8 +206,11 @@ export default {
 
   if (sanitizedData.clienteId) {
     await clientStore.updateClient(sanitizedData.clienteId, sanitizedData);
+    Swal.fire('Cliente alterado com Sucesso');
+    router.push('/clientes');
   } else {
     await clientStore.submitFormClient(sanitizedData);
+    Swal.fire('Houve algum erro na alteração');
   }
 };
 
@@ -223,7 +229,7 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
-  background-color: #f4f4f4;
+  background-color: #ededed;
 }
 
 .client-form {

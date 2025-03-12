@@ -55,6 +55,7 @@
   height: 100vh;
   position: relative;
   flex-direction: row;
+  background-color: #ededed;
 }
 
 /* Menu Lateral */

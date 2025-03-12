@@ -64,11 +64,12 @@ export default {
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            width: 50vw;  
+            width: 50%;  
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             margin: 100px 500px;
+
         }
         .login{
           display: flex;

@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar">
     <ul>
+      <router-link to="/home" class="home"><i class="pi pi-home"></i> Home</router-link> 
       <router-link to="/clientes"><i class="pi pi-user"></i> Clientes</router-link> 
       
     </ul>
@@ -14,7 +15,7 @@
   <style scoped>
 
 .navbar {
-  width: 150px;
+  width: 100px;
   height: calc(100vh - 60px); /* Ocupa toda a altura abaixo do cabeçalho */
   background-color: #333;
   color: white;
@@ -29,7 +30,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 200px;
+  width: 120px;
   font-size: 1.2rem;
 }
 
@@ -39,13 +40,18 @@
   font-weight: bold;
   padding: 10px 20px;
   display: block;
-  width: 200px;
+  font-size: 1.4rem;
+  width: 120px;
+  text-align: center;
 }
-
+.home{
+  font-size: 1.5rem;
+}
 .navbar a:hover {
   background-color: #555;
 }
 .pi-user{
+
   margin-right: 5px;
 }
 

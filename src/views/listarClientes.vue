@@ -68,11 +68,12 @@
   display: flex;
   height: 100vh;
   position: relative;
+  background-color: #ededed;
 }
 
 /* Menu Lateral */
 .sidebar {
-  width: 240px;
+  width: 160px;
   background-color: #333;
   color: #fff;
   padding: 20px;
@@ -102,7 +103,8 @@
 
 /* Conteúdo Principal */
 .content {
-  margin-left: 240px; /* Ajuste para a largura do menu lateral */
+  margin-top: 20px;
+  margin-left: 180px; /* Ajuste para a largura do menu lateral */
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -127,9 +129,9 @@
 .main {
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  padding: 20px;
+  margin-top: 10px;
 }
 
 .central-content {
@@ -143,7 +145,7 @@
 
 .central-content h2 {
   font-size: 32px;
-  margin-bottom: 10px;
+  margin: 10px;
 }
 
 .central-content p {
