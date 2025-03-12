@@ -1,24 +1,24 @@
-<template >
- <div class="table">
+<template>
+  <div class="container-list">
     <h1>Lista de Clientes</h1>
      <div class="finder">
         <input type="text" />
-        <button type="text"> Procurar</button>
+        <button type="text" class="view pi pi-search"> Procurar</button>
      </div> 
 
     <p v-if="clientStore.loading">Carregando...</p>
     <p v-if="clientStore.error">{{ clientStore.error }}</p>
 
-    <!-- Tabela de Clientes -->
-    <table v-if="clientStore.clients.length" class="client-table">
+
+    <table class="styled-table">
       <thead>
         <tr>
           <th>ID</th>
-          <th>CPG</th>
+          <th>CPF</th>
           <th>Nome</th>
           <th>RG</th>
           <th>Data de Expedição</th>
-          <th>Orgão de expedição</th>
+          <th>Orgão de Expedição</th>
           <th>UF</th>
           <th>Data de Nascimento</th>
           <th>Sexo</th>
@@ -29,10 +29,9 @@
           <th>Numero</th>
           <th>Complemento</th>
           <th>Bairro</th>
-          <th>cidade</th>
+          <th>Cidade</th>
           <th>UF</th>
-          <th>Acoes</th>
-
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -56,17 +55,21 @@
           <td>{{ client.endereco.cidade }}</td>
           <td>{{ client.endereco.uf }}</td>
           <td class="actions">
-            <button>Ver</button>
-            <button>Deletar</button>
+            <router-link :to="{ name: 'edit-client', params: { clienteId: client.clienteId } }">
+              <button class="view "><i class="pi pi-eye"></i> Ver</button>
+            </router-link>
+          
+            <button  @click="deleteClient(client.clienteId)" class="delete"> <i class="pi pi pi-trash"></i>Deletar</button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <p v-else>Nenhum cliente encontrado.</p>
-
-    <p>Total de clientes: {{ clientStore.totalClients }}</p>
+    
+ 
   </div>
+ 
+
+
 
 </template>
 <script setup>
@@ -80,31 +83,123 @@
      })
 
 
+    const deleteClient = (clientID) => {
+      if(confirm("Tem certeza que deseja deletar")){
+        clientStore.deleteClient(clientID)
+      }
+    }
+
+
 </script>
 <style >
-
+.container-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: start;
+}
+h1{
+  margin-bottom: 10px;
+}
 .finder{
     display: flex;
-    margin: 20px;
-    width: 70%;
+    margin-bottom: 20px;
+    width: 100%;
 }
 .finder input{
     width: 100%;
+    outline: none;
+    border-radius: 6px;
 }
 .finder button{
     margin-left: 20px;
     max-width: 100px;
 }
-.table{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.container {
+  width: 50vw;
+  margin: 0 auto;
+  padding: 20px;
 }
-table{
-    color: #000;
-    width: 85%;
-    
+
+.styled-table {
+  width: 50vw;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #ddd; /* Borda externa */
+  border-radius: 5px;
+}
+
+.styled-table thead {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px;
+  border: 1px solid #ddd; /* Bordas internas para células */
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.styled-table td {
+  background-color: #fff;
+}
+
+.styled-table th {
+  text-align: center;
+  font-weight: bold;
+}
+
+.styled-table td:last-child {
+  text-align: center;
+}
+.actions{
+  display: flex;
+  justify-content: space-between;
+}
+.view{
+	background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+	background-color:#2dabf9;
+	border-radius: 6px;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:9px 23px;
+	text-decoration:none;
+  margin-right: 10px;
+
+}
+.viewButton:hover {
+	background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	background-color:#0688fa;
+}
+.view:active {
+	position:relative;
+	top:1px;
+}
+.delete{
+	background-color:red;
+	border-radius: 6px;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:16px;
+	padding:9px 23px;
+	text-decoration:none;
+  margin-right: 10px;
+
+}
+.delete:hover {
+
+	background-color:rgb(147, 25, 25);
+}
+.delete:active {
+	position:relative;
+	top:1px;
 }
 
 </style>

@@ -38,7 +38,7 @@ export default {
 
       if (user) {
         
-        router.push({path: "/home"});
+        router.push({path: "/clientes"});
       
       } else {
         error.value = 'Invalid username or password';
@@ -55,18 +55,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
+
+
         .container-login {
             background: white;
             color: #000;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            width: 300px;
+            width: 50vw;  
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 50px;
+            margin: 100px 500px;
         }
         .login{
           display: flex;
@@ -74,14 +76,13 @@ export default {
           justify-content: center;
           align-items: center;
         }
-        input {
+        .login input {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
-            border: 1px solid #ccc;
             border-radius: 5px;
         }
-        button {
+        .login button {
             width: 100%;
             padding: 10px;
             background: blue;

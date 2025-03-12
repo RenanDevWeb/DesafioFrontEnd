@@ -1,9 +1,8 @@
 <template>
   <nav class="navbar">
     <ul>
-      <router-link to="/home">Início</router-link> 
-      <router-link to="/clientes">Clientes</router-link> 
-      <router-link to="/addClients">Adicionar Cliente</router-link> 
+      <router-link to="/clientes"><i class="pi pi-user"></i> Clientes</router-link> 
+      <router-link to="/addClients"><i class="pi pi-user-plus"></i> Adicionar Cliente</router-link> 
     </ul>
   </nav>
   </template>
@@ -15,26 +14,23 @@
   <style scoped>
 
 .navbar {
-  width: 190px;
+  width: 150px;
   height: calc(100vh - 60px); /* Ocupa toda a altura abaixo do cabeçalho */
   background-color: #333;
   color: white;
-  position: fixed;
-  left: 0;
-  top: 60px; /* Começa logo abaixo do cabeçalho */
-  display: flex;
+  margin-top: 40px;
   flex-direction: column;
-  padding: 20px 0;
+  padding: 10px 0;
 }
 
 .navbar ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 5px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  width: 100%;
+  gap: 12px;
+  width: 200px;
+  font-size: 1.2rem;
 }
 
 .navbar a {
@@ -43,9 +39,14 @@
   font-weight: bold;
   padding: 10px 20px;
   display: block;
+  width: 200px;
 }
 
 .navbar a:hover {
   background-color: #555;
 }
+.pi-user{
+  margin-right: 5px;
+}
+
   </style>

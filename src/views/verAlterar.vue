@@ -1,7 +1,8 @@
 
 
 <template>
-   <div class="dashboard">
+
+<div class="dashboard">
     <div class="sidebar">
       <navbar />
     </div>
@@ -12,9 +13,7 @@
       </div>
 
       <div class="main">
-        <div class="">
-          <ListClients />
-        </div>
+        <verAlterar />
       </div>
 
       <div class="footer">
@@ -23,6 +22,9 @@
     </div>
   </div>
     
+
+
+
   </template>
   
   
@@ -30,30 +32,19 @@
   import navbar from '../components/navbar.vue';
   import appFooter from '../components/appFooter.vue'
   import AppHeader from '../components/appHeader.vue';
-  import ListClients from '../components/Listclients.vue'
-  import {getClients} from '../services/api.js'
-  import {ref,onMounted} from 'vue'
+  import verAlterar from '../components/verAlterar.vue'
   
-  const clients = ref([])
-  const erro = ref(null)
-
-
-
-
   
   export default {
     components: {
       navbar,
       appFooter,
       AppHeader,
-      ListClients
-    },
-   
-
+      verAlterar
+    }
   };
   
   </script>
-  
   
   
   <style scoped>
@@ -62,6 +53,7 @@
   display: flex;
   height: 100vh;
   position: relative;
+  flex-direction: row;
 }
 
 /* Menu Lateral */
@@ -75,6 +67,9 @@
   left: 0;
   height: 100vh;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .sidebar ul {
@@ -122,7 +117,7 @@
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 20px;
 }
 
@@ -146,12 +141,12 @@
 }
 
 /* Rodapé */
-.footer {
+/* .footer {
   background-color: #333;
   color: #fff;
   text-align: center;
   padding: 10px;
-}
+} */
 
 /* Responsividade */
 @media (max-width: 768px) {
@@ -163,15 +158,13 @@
     width: 100%;
     height: auto;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-around;
     padding: 10px 0;
   }
 
   .sidebar ul {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-around;
     width: 100%;
   }
 
@@ -189,5 +182,6 @@
     width: 90%;
   }
 }
+  
   
   </style>

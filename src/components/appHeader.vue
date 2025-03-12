@@ -1,9 +1,9 @@
 <template >
  
         <nav>
-            <h1>Logo</h1>
+            <img src="../img/fcc-1.jpg" alt="">
             <div class="logout">
-                <h2><a href="">Sair</a></h2>
+                <h2><a href=""> <i class="pi pi-sign-out"></i>Sair</a></h2>
             </div>
         </nav>
     
@@ -16,7 +16,9 @@ export default {
 
 
 <style scoped>
-
+body{
+  background-color: #fff;
+}
 nav {
   width: 100%;
   height: 60px;
@@ -32,12 +34,14 @@ nav {
   z-index: 1000; /* Mantém acima do menu */
 }
 
-nav h1 {
-  margin: 0;
+nav img{
+  width: 50px;
+  height: 50px;
 }
 
 .logout h2 {
   margin: 0;
+  font-size: 1.8rem;
 }
 
 .logout a {
@@ -46,6 +50,9 @@ nav h1 {
 }
 
 .logout a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+}
+.pi-sign-out{
+  margin-right: 5px;
 }
 </style>
