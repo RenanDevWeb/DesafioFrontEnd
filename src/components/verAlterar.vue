@@ -174,35 +174,39 @@ export default {
     });
 
     const sanitizeData = (clientData) => {
-      clientData.value.cpf = form.value.cpf.replace(/[^\d]/g, ""); // Remove caracteres não numéricos do CPF
-      clientData.value.rg = form.value.rg.replace(/[^\d]/g, ""); // Remove caracteres não numéricos do RG
-      clientData.value.nome = form.value.nome.trim().replace(/[^\w\s]/gi, ''); // Remove caracteres especiais do nome
-      clientData.value.dataExpedicao = form.value.dataExpedicao ? new Date(form.value.dataExpedicao).toISOString().split('T')[0] : ''; // Sanitiza a data
-      clientData.value.dataNascimento = form.value.dataNascimento ? new Date(form.value.dataNascimento).toISOString().split('T')[0] : ''; // Sanitiza a data
-      clientData.value.orgaoExpedicao = form.value.orgaoExpedicao.trim().replace(/[^\w\s]/gi, ''); // Sanitiza o órgão de expedição
-      clientData.value.sexo = form.value.sexo.trim(); // Remove espaços extras no sexo
-      clientData.value.estadoCivil = form.value.estadoCivil.trim(); // Remove espaços extras no estado civil
+  // Verifique se os campos do cliente estão definidos antes de sanitizar
+  clientData.cpf = clientData.cpf ? clientData.cpf.replace(/[^\d]/g, "") : "";
+  clientData.rg = clientData.rg ? clientData.rg.replace(/[^\d]/g, "") : "";
+  clientData.nome = clientData.nome ? clientData.nome.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.dataExpedicao = clientData.dataExpedicao ? new Date(clientData.dataExpedicao).toISOString().split('T')[0] : '';
+  clientData.dataNascimento = clientData.dataNascimento ? new Date(clientData.dataNascimento).toISOString().split('T')[0] : '';
+  clientData.orgaoExpedicao = clientData.orgaoExpedicao ? clientData.orgaoExpedicao.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.sexo = clientData.sexo ? clientData.sexo.trim() : '';
+  clientData.estadoCivil = clientData.estadoCivil ? clientData.estadoCivil.trim() : '';
 
-      // Sanitização do endereço
-      clientData.value.endereco.cep = form.value.endereco.cep.replace(/[^\d]/g, ''); // Remove caracteres não numéricos do CEP
-      clientData.value.endereco.logradouro = form.value.endereco.logradouro.trim().replace(/[^\w\s]/gi, ''); // Sanitiza o logradouro
-      clientData.value.endereco.numero = form.value.endereco.numero.trim(); // Remove espaços extras no número
-      clientData.value.endereco.complemento = form.value.endereco.complemento.trim().replace(/[^\w\s]/gi, ''); // Sanitiza o complemento
-      clientData.value.endereco.bairro = form.value.endereco.bairro.trim().replace(/[^\w\s]/gi, ''); // Sanitiza o bairro
-      clientData.value.endereco.cidade = form.value.endereco.cidade.trim().replace(/[^\w\s]/gi, ''); // Sanitiza a cidade
-      clientData.value.endereco.uf = form.value.endereco.uf.trim().toUpperCase(); // Converte o UF para maiúsculas
-    };
+  // Verificação e sanitização do objeto endereco
+  clientData.endereco = clientData.endereco || {};  // Garantir que 'endereco' existe
+  clientData.endereco.cep = clientData.endereco.cep ? clientData.endereco.cep.replace(/[^\d]/g, '') : '';
+  clientData.endereco.logradouro = clientData.endereco.logradouro ? clientData.endereco.logradouro.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.endereco.numero = clientData.endereco.numero ? clientData.endereco.numero.trim() : '';
+  clientData.endereco.complemento = clientData.endereco.complemento ? clientData.endereco.complemento.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.endereco.bairro = clientData.endereco.bairro ? clientData.endereco.bairro.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.endereco.cidade = clientData.endereco.cidade ? clientData.endereco.cidade.trim().replace(/[^\w\s]/gi, '') : '';
+  clientData.endereco.uf = clientData.endereco.uf ? clientData.endereco.uf.trim().toUpperCase() : '';
 
-
+  console.log(clientData); // Verifique o conteúdo de clientData após sanitização
+};
     const updateClient = async () => {
-      const sanitizedData = sanitizeData(clientData.value);
-      console.log(sanitizeData);
+  sanitizeData(clientData.value); // Sanitiza os dados
+  const sanitizedData = clientData.value; // Obtém os dados já sanitizados
+
+
   if (sanitizedData.clienteId) {
     await clientStore.updateClient(sanitizedData.clienteId, sanitizedData);
   } else {
     await clientStore.submitFormClient(sanitizedData);
   }
-    };
+};
 
     return {
       clientData,

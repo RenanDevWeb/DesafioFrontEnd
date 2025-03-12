@@ -2,7 +2,7 @@
   <nav class="navbar">
     <ul>
       <router-link to="/clientes"><i class="pi pi-user"></i> Clientes</router-link> 
-      <router-link to="/addClients"><i class="pi pi-user-plus"></i> Adicionar Cliente</router-link> 
+      
     </ul>
   </nav>
   </template>

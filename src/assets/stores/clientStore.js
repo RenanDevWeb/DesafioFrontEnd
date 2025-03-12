@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-// Função auxiliar para garantir que as datas sejam no formato correto
 function formatDate(date) {
-  if (!date) return '';  // Retorna vazio se não houver data
+  if (!date) return ''; 
   const d = new Date(date);
   return isNaN(d.getTime()) ? '' : d.toISOString().split('T')[0]; // Formato yyyy-mm-dd
 }
@@ -14,6 +13,7 @@ export const useClientStore = defineStore("clientStore", {
     loading: false,
     error: null,
     totalClients: 0,
+    searchQuery: "",
     form: {
       clienteId: 0,
       cpf: '',
@@ -58,11 +58,9 @@ export const useClientStore = defineStore("clientStore", {
     fillFormclient(data) {
       this.form = { ...this.form, ...data };
       
-      // Formatando as datas corretamente
+      
       this.form.dataExpedicao = formatDate(this.form.dataExpedicao);
       this.form.dataNascimento = formatDate(this.form.dataNascimento);
-
-      console.log(this.form); // Verificando os dados
     },
 
     async fetchClientById(clienteId) {
@@ -100,12 +98,16 @@ export const useClientStore = defineStore("clientStore", {
       try {
         await axios.delete(`https://extranet.fcc.org.br/webapi/testecandidato/v1/Cliente/Excluir/${clienteId}`);
         this.clients = this.clients.filter(client => client.clienteId !== clienteId);
-        console.log(`Cliente com ID ${clienteId} deletado com sucesso.`);
+        
       } catch (error) {
         this.error = "Erro ao deletar o cliente!";
       }
     },
 
+    setSearchQuery(query) {
+      this.searchQuery = query;
+    },
+      
     async updateClient(clienteId, updatedData) {
       if (!clienteId) {
         console.error("Erro: clienteId não está definido.");
@@ -116,7 +118,7 @@ export const useClientStore = defineStore("clientStore", {
       this.error = null;
       console.log(`https://extranet.fcc.org.br/webapi/testecandidato/v1/Cliente/Alterar/${clienteId}`);
       try {
-        const response = await axios.put(`https://extranet.fcc.org.br/webapi/testecandidato/v1/Cliente/Alterar/${clienteId}`,
+        const response = await axios.put(`https://extranet.fcc.org.br/webapi/testecandidato/v1/Cliente/Alterar`,
           updatedData,
           {
             headers: {
@@ -138,8 +140,41 @@ export const useClientStore = defineStore("clientStore", {
       }
     },
   },
+  
 
   getters: {
-   
-  },
+
+    filteredClients: (state) => {
+
+  
+     
+      if (!state.searchQuery) {
+
+        return state.clients; 
+      }
+  
+      const searchTerm = state.searchQuery.trim().toLowerCase();  
+    
+  
+      return state.clients.filter((client) => {
+        if (!client) {
+
+          return false; 
+        }
+  
+ 
+        const clientName = client.nome
+          ? client.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          : "";
+  
+        const nameMatch = clientName.includes(searchTerm);
+        
+        const clientCPF = client.cpf ? client.cpf.replace(/\D/g, "") : "";
+        const cpfMatch = clientCPF.includes(searchTerm.replace(/\D/g, ""));  
+        
+
+        return nameMatch || cpfMatch; 
+      });
+    }
+  }
 });

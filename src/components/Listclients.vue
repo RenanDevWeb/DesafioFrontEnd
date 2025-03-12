@@ -2,8 +2,12 @@
   <div class="container-list">
     <h1>Lista de Clientes</h1>
      <div class="finder">
-        <input type="text" />
-        <button type="text" class="view pi pi-search"> Procurar</button>
+        <input type="text"
+        v-model="clientStore.searchQuery" 
+        placeholder="Buscar por CPF" 
+        
+        />
+        <router-link to="/addClients"><button type="text" class="view pi pi-plus"> Cadastrar</button></router-link>
      </div> 
 
     <p v-if="clientStore.loading">Carregando...</p>
@@ -35,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="client in clientStore.clients" :key="client.id">
+        <tr  v-for="client in clientStore.filteredClients" :key="client.clienteId">
           <td>{{ client.clienteId }}</td>
           <td>{{ client.cpf }}</td>
           <td>{{ client.nome }}</td>
@@ -59,9 +63,12 @@
               <button class="view "><i class="pi pi-eye"></i> Ver</button>
             </router-link>
           
-            <button  @click="deleteClient(client.clienteId)" class="delete"> <i class="pi pi pi-trash"></i>Deletar</button>
+            <button v-on:click="deleteClient(client.clienteId)" class="delete"> <i class="pi pi pi-trash"></i>Deletar</button>
           </td>
         </tr>
+        <tr v-if="clientStore.filteredClients.length === 0">
+        <td colspan="17">Nenhum cliente encontrado!</td>
+      </tr>
       </tbody>
     </table>
     
@@ -75,6 +82,8 @@
 <script setup>
      import {onMounted} from 'vue'
      import { useClientStore } from "../assets/stores/clientStore"
+     import Swal from 'sweetalert2';
+    import 'sweetalert2/dist/sweetalert2.min.css';
 
      const clientStore  = useClientStore()
 
@@ -84,10 +93,30 @@
 
 
     const deleteClient = (clientID) => {
-      if(confirm("Tem certeza que deseja deletar")){
-        clientStore.deleteClient(clientID)
-      }
+      Swal.fire({
+    title: 'Tem certeza?',
+    text: 'Esta ação não pode ser desfeita!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Sim, Deletar',
+    cancelButtonText: 'Cancelar',
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      clientStore.deleteClient(clientID)
+      Swal.fire(
+        'Deletado!',
+        'O cliente foi removido.',
+        'success'
+      )
     }
+  })
+}
+       
+
+
+     
 
 
 </script>
@@ -110,6 +139,7 @@ h1{
     width: 100%;
     outline: none;
     border-radius: 6px;
+    padding: 10px;
 }
 .finder button{
     margin-left: 20px;

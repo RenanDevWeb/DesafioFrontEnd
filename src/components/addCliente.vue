@@ -115,6 +115,8 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useClientStore } from "../assets/stores/clientStore.js";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
   setup() {
@@ -172,10 +174,10 @@ export default {
         console.log("Dados do formulário:", form.value);
         clientStore.fillFormclient(form.value); // Atualiza os dados na store
         await clientStore.submitFormClient();  // Envia os dados da store
-        alert("Cliente cadastrado com sucesso!");
+        Swal.fire('Cliente cadastrado com Sucesso');
       } catch (error) {
-        console.error("Erro ao enviar os dados:", error);
-        alert("Houve um erro ao enviar o formulário.");
+        Swal.fire('Houve um erro ao enviar o formulário.');
+       
       }
     };
 
@@ -195,7 +197,7 @@ export default {
             form.value.endereco.uf = response.data.uf;
           }
         } catch (error) {
-          console.error("Erro ao buscar o CEP:", error);
+          
           alert("Erro ao buscar o CEP.");
         }
       }
