@@ -38,7 +38,7 @@ export default {
 
       if (user) {
         
-        router.push({path: "/clientes"});
+        router.push({path: "/home"});
       
       } else {
         error.value = 'Invalid username or password';
